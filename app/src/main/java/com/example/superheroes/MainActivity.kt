@@ -53,8 +53,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    // ❌ Esta función composable está definida dentro de la Activity, lo cual NO es recomendable.
-    // 🔧 Debería definirse fuera de la clase MainActivity para seguir buenas prácticas de Jetpack Compose.
+    //  Esta función composable está definida dentro de la Activity, lo cual NO es recomendable.
+    //  Debería definirse fuera de la clase MainActivity para seguir buenas prácticas de Jetpack Compose.
 
     /**
      * Composable principal que muestra la estructura general de la app: una TopAppBar y una lista de héroes.
@@ -67,8 +67,8 @@ class MainActivity : ComponentActivity() {
                 TopAppBar() // Barra superior centrada con el nombre de la app
             }
         ) {
-            // ❗ Acceder directamente al repositorio desde la UI no es una buena práctica.
-            // 🔜 En el futuro se usará un ViewModel que exponga los datos.
+            // Acceder directamente al repositorio desde la UI no es una buena práctica.
+            // En el futuro se usará un ViewModel que exponga los datos.
             val heroes = HeroesRepository.heroes
             HeroesList(heroes = heroes, contentPadding = it) // Muestra la lista de héroes
         }
