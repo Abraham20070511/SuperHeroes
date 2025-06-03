@@ -34,47 +34,50 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.superheroes.model.HeroesRepository
 import com.example.superheroes.ui.theme.SuperheroesTheme
 
+// Clase principal de la aplicación, representa la Activity de entrada.
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge() // Habilita diseño de borde a borde (sin padding por defecto en status/nav bar)
         setContent {
+            // Aplica el tema personalizado SuperheroesTheme a toda la interfaz
             SuperheroesTheme {
-                // A surface container using the 'background' color from the theme
+                // Surface proporciona un fondo utilizando el color del tema
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SuperheroesApp()
+                    SuperheroesApp() // Llama al composable principal de la app
                 }
             }
         }
     }
 
+    // ❌ Esta función composable está definida dentro de la Activity, lo cual NO es recomendable.
+    // 🔧 Debería definirse fuera de la clase MainActivity para seguir buenas prácticas de Jetpack Compose.
+
     /**
-     * Composable that displays an app bar and a list of heroes.
+     * Composable principal que muestra la estructura general de la app: una TopAppBar y una lista de héroes.
      */
     @Composable
     fun SuperheroesApp() {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = {
-                TopAppBar()
+                TopAppBar() // Barra superior centrada con el nombre de la app
             }
         ) {
-            /* Important: It is not a good practice to access data source directly from the UI.
-            In later units you will learn how to use ViewModel in such scenarios that takes the
-            data source as a dependency and exposes heroes.
-             */
+            // ❗ Acceder directamente al repositorio desde la UI no es una buena práctica.
+            // 🔜 En el futuro se usará un ViewModel que exponga los datos.
             val heroes = HeroesRepository.heroes
-            HeroesList(heroes = heroes, contentPadding = it)
+            HeroesList(heroes = heroes, contentPadding = it) // Muestra la lista de héroes
         }
     }
 
     /**
-     * Composable that displays a Top Bar with an icon and text.
+     * Composable que muestra una barra superior con el nombre de la app.
      *
-     * @param modifier modifiers to set to this composable
+     * @param modifier permite modificar el comportamiento visual del componente
      */
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
@@ -82,7 +85,7 @@ class MainActivity : ComponentActivity() {
         CenterAlignedTopAppBar(
             title = {
                 Text(
-                    text = stringResource(R.string.app_name),
+                    text = stringResource(R.string.app_name), // Obtiene el texto desde strings.xml
                     style = MaterialTheme.typography.displayLarge,
                 )
             },
@@ -90,6 +93,9 @@ class MainActivity : ComponentActivity() {
         )
     }
 
+    /**
+     * Vista previa para Android Studio: permite ver cómo se verá la interfaz sin ejecutar la app.
+     */
     @Preview(showBackground = true)
     @Composable
     fun SuperHeroesPreview() {
